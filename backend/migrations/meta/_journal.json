@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1740031076809,
+      "tag": "0000_absurd_boomerang",
+      "breakpoints": true
+    }
+  ]
+}
