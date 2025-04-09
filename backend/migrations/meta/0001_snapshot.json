@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "a41cb04c-b728-419a-8f54-5e835b1450fd",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "d6e6bfbc-82a9-4b64-bc6f-ee98bdb5d4c5",
+  "prevId": "a41cb04c-b728-419a-8f54-5e835b1450fd",
   "tables": {
     "user": {
       "name": "user",
@@ -37,6 +37,13 @@
         },
         "phoneNumber": {
           "name": "phoneNumber",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "role": {
+          "name": "role",
           "type": "varchar(20)",
           "primaryKey": false,
           "notNull": false,
@@ -592,10 +599,51 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "imageUrl": {
+          "name": "imageUrl",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "managerId": {
+          "name": "managerId",
+          "type": "varchar(36)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "venue_ratingId_rating_id_fk": {
+          "name": "venue_ratingId_rating_id_fk",
+          "tableFrom": "venue",
+          "tableTo": "rating",
+          "columnsFrom": [
+            "ratingId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "venue_managerId_user_id_fk": {
+          "name": "venue_managerId_user_id_fk",
+          "tableFrom": "venue",
+          "tableTo": "user",
+          "columnsFrom": [
+            "managerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {
         "venue_id": {
           "name": "venue_id",

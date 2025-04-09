@@ -3,11 +3,12 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import fileUpload from "express-fileupload";
 dotenv.config({ path: ".env.local" });
-const cors = require("cors");
+import cors from "cors";
+import { createServer } from "http";
 const app = express();
 const server = createServer(app);
 const port = process.env.SERVER_PORT;
-const route = require("./api/routes");
+import route from "./routes/index.js";
 
 app.use(
   fileUpload({

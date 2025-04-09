@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "proxy": "http://localhost:5500",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
@@ -17,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -25,16 +27,17 @@
     "drizzle-orm": "^0.33.0",
     "express": "^4.18.2",
     "express-fileupload": "^1.5.1",
-    "faker": "^5.5.3",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mysql2": "^3.12.0",
     "qs": "^6.13.1",
     "socket.io": "^4.8.0",
+    "uuid": "^11.1.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.5.0",
     "drizzle-kit": "^0.24.2",
     "nodemon": "^3.1.7"
   }
