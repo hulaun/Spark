@@ -1,18 +1,45 @@
 import {
   mysqlTable,
-  varchar,
-  timestamp,
+  int,
+  time,
   decimal,
-  boolean,
+  mysqlEnum,
+  datetime,
+  varchar,
 } from "drizzle-orm/mysql-core";
 import { Courts } from "./Court";
 
 export const Slots = mysqlTable("slot", {
-  id: varchar("id", { length: 36 }).primaryKey(),
-  courtId: varchar("courtId", { length: 36 }).references(() => Courts.id),
-  startTime: timestamp("startTime").notNull(),
-  endTime: timestamp("endTime").notNull(),
+  id: int("id").primaryKey().autoincrement(),
+
+  courtId: int("courtId")
+    .notNull()
+    .references(() => Courts.id),
+
+  dayOfWeek: mysqlEnum("day_of_week", [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+  ]).notNull(),
+
+  hourStart: time("hour_start").notNull(),
+  hourEnd: time("hour_end").notNull(),
+
+  status: mysqlEnum("status", ["available", "booked", "unavailable"])
+    .default("available")
+    .notNull(),
+
   price: decimal("price", { precision: 10, scale: 2 }).notNull(),
   isDiscounted: boolean("isDiscounted").default(false),
-  discountAmount: decimal("discountAmount", { precision: 10, scale: 2 }),
+  discountType: mysqlEnum("discount_type", ["percentage", "fixed"]),
+
+  discount: decimal("discount", { precision: 10, scale: 2 }).default("0.00"),
+
+  createdAt: datetime("created_at").notNull().defaultNow(),
+
+  updatedAt: datetime("updated_at").notNull().defaultNow().onUpdateNow(),
 });

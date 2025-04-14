@@ -5,9 +5,8 @@ export const Users = mysqlTable(
   "user",
   {
     id: varchar("id", { length: 36 }).primaryKey(),
-    username: varchar("username", { length: 50 }).notNull(),
     password: varchar("password", { length: 255 }).notNull(),
-    email: varchar("email", { length: 255 }).notNull(),
+    email: varchar("email", { length: 255 }),
     phoneNumber: varchar("phoneNumber", { length: 20 }),
     role: varchar("role", { length: 20 }),
     img: varchar("img", { length: 255 }),
