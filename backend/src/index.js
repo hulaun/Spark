@@ -18,7 +18,12 @@ app.use(
 
 app.use(
   cors({
-    origin: ["http://localhost:8080", "http://127.0.0.1:8080"],
+    origin: [
+      "http://localhost:8080",
+      "http://127.0.0.1:8080",
+      "https://localhost:5000",
+      "http://127.0.0.1:5000",
+    ],
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })

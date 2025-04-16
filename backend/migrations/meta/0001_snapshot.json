@@ -1,25 +1,18 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "d6e6bfbc-82a9-4b64-bc6f-ee98bdb5d4c5",
-  "prevId": "a41cb04c-b728-419a-8f54-5e835b1450fd",
+  "id": "0150eb25-1b93-431f-8243-fb0c571afa26",
+  "prevId": "e5871a96-5e15-43c8-b3d2-5221e7189e15",
   "tables": {
     "user": {
       "name": "user",
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
-        },
-        "username": {
-          "name": "username",
-          "type": "varchar(50)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "password": {
           "name": "password",
@@ -32,7 +25,7 @@
           "name": "email",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         },
         "phoneNumber": {
@@ -70,6 +63,36 @@
           "notNull": false,
           "autoincrement": false
         },
+        "otp": {
+          "name": "otp",
+          "type": "varchar(6)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "otpExpires": {
+          "name": "otpExpires",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "isVerified": {
+          "name": "isVerified",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "isBlocked": {
+          "name": "isBlocked",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",
@@ -102,9 +125,16 @@
     "user_profile": {
       "name": "user_profile",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
         "userId": {
           "name": "userId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -155,10 +185,10 @@
         }
       },
       "compositePrimaryKeys": {
-        "user_profile_userId": {
-          "name": "user_profile_userId",
+        "user_profile_id": {
+          "name": "user_profile_id",
           "columns": [
-            "userId"
+            "id"
           ]
         }
       },
@@ -169,14 +199,14 @@
       "columns": {
         "userId": {
           "name": "userId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "sportId": {
           "name": "sportId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -219,10 +249,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "name": {
           "name": "name",
@@ -249,14 +279,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "userId": {
           "name": "userId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -277,7 +307,7 @@
         },
         "paymentMethodId": {
           "name": "paymentMethodId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -335,10 +365,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "name": {
           "name": "name",
@@ -365,14 +395,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "userId": {
           "name": "userId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -418,36 +448,51 @@
       },
       "uniqueConstraints": {}
     },
-    "slot": {
-      "name": "slot",
+    "Slot": {
+      "name": "Slot",
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "courtId": {
           "name": "courtId",
-          "type": "varchar(36)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "startTime": {
-          "name": "startTime",
-          "type": "timestamp",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "endTime": {
-          "name": "endTime",
-          "type": "timestamp",
+        "dayOfWeek": {
+          "name": "dayOfWeek",
+          "type": "enum('Sun','Mon','Tue','Wed','Thu','Fri','Sat')",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "hourStart": {
+          "name": "hourStart",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "hourEnd": {
+          "name": "hourEnd",
+          "type": "time",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "enum('available','booked','unavailable')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'available'"
         },
         "price": {
           "name": "price",
@@ -464,19 +509,43 @@
           "autoincrement": false,
           "default": false
         },
-        "discountAmount": {
-          "name": "discountAmount",
-          "type": "decimal(10,2)",
+        "discountType": {
+          "name": "discountType",
+          "type": "enum('percentage','fixed')",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "discount": {
+          "name": "discount",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'0.00'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "onUpdate": true
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "slot_courtId_court_id_fk": {
-          "name": "slot_courtId_court_id_fk",
-          "tableFrom": "slot",
+        "Slot_courtId_court_id_fk": {
+          "name": "Slot_courtId_court_id_fk",
+          "tableFrom": "Slot",
           "tableTo": "court",
           "columnsFrom": [
             "courtId"
@@ -489,8 +558,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "slot_id": {
-          "name": "slot_id",
+        "Slot_id": {
+          "name": "Slot_id",
           "columns": [
             "id"
           ]
@@ -503,14 +572,14 @@
       "columns": {
         "bookingId": {
           "name": "bookingId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "slotId": {
           "name": "slotId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -531,10 +600,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "slot_booking_slotId_slot_id_fk": {
-          "name": "slot_booking_slotId_slot_id_fk",
+        "slot_booking_slotId_Slot_id_fk": {
+          "name": "slot_booking_slotId_Slot_id_fk",
           "tableFrom": "slot_booking",
-          "tableTo": "slot",
+          "tableTo": "Slot",
           "columnsFrom": [
             "slotId"
           ],
@@ -553,10 +622,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "name": {
           "name": "name",
@@ -567,7 +636,7 @@
         },
         "ratingId": {
           "name": "ratingId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -609,7 +678,7 @@
         },
         "managerId": {
           "name": "managerId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -659,14 +728,14 @@
       "columns": {
         "venueId": {
           "name": "venueId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "sportId": {
           "name": "sportId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -709,14 +778,14 @@
       "columns": {
         "venueId": {
           "name": "venueId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
         "paymentId": {
           "name": "paymentId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -759,14 +828,14 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "autoincrement": true
         },
         "venueId": {
           "name": "venueId",
-          "type": "varchar(36)",
+          "type": "int",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

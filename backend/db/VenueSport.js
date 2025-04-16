@@ -1,8 +1,8 @@
-import { mysqlTable, varchar } from "drizzle-orm/mysql-core";
-import { Venues } from "./Venue";
-import { Sports } from "./Sport";
+import { int, mysqlTable } from "drizzle-orm/mysql-core";
+import { Venues } from "./Venue.js";
+import { Sports } from "./Sport.js";
 
 export const VenueSport = mysqlTable("venue_sport", {
-  venueId: varchar("venueId", { length: 36 }).references(() => Venues.id),
-  sportId: varchar("sportId", { length: 36 }).references(() => Sports.id),
+  venueId: int("venueId").references(() => Venues.id),
+  sportId: int("sportId").references(() => Sports.id),
 });

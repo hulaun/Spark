@@ -1,8 +1,8 @@
-import { mysqlTable, varchar } from "drizzle-orm/mysql-core";
-import { Venues } from "./Venue";
+import { int, mysqlTable, serial, varchar } from "drizzle-orm/mysql-core";
+import { Venues } from "./Venue.js";
 
 export const Courts = mysqlTable("court", {
-  id: varchar("id", { length: 36 }).primaryKey(),
-  venueId: varchar("venueId", { length: 36 }).references(() => Venues.id),
+  id: int("id").primaryKey().autoincrement(),
+  venueId: int("venueId").references(() => Venues.id),
   name: varchar("name", { length: 255 }),
 });

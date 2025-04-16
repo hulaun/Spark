@@ -6,4 +6,6 @@ async function index(req, res) {
   res.send("Hello from user route");
 }
 
-export default { index };
+export const UserController = {
+  index,
+};

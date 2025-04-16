@@ -1,10 +1,17 @@
-import { mysqlTable, varchar, timestamp, check } from "drizzle-orm/mysql-core";
+import {
+  mysqlTable,
+  varchar,
+  timestamp,
+  check,
+  serial,
+  int,
+} from "drizzle-orm/mysql-core";
 import { sql } from "drizzle-orm";
 
 export const Users = mysqlTable(
   "user",
   {
-    id: varchar("id", { length: 36 }).primaryKey(),
+    id: int("id").primaryKey().autoincrement(),
     password: varchar("password", { length: 255 }).notNull(),
     email: varchar("email", { length: 255 }),
     phoneNumber: varchar("phoneNumber", { length: 20 }),
@@ -12,6 +19,10 @@ export const Users = mysqlTable(
     img: varchar("img", { length: 255 }),
     facebookId: varchar("facebookId", { length: 255 }),
     googleId: varchar("googleId", { length: 255 }),
+    otp: varchar("otp", { length: 6 }),
+    otpExpires: timestamp("otpExpires"),
+    isVerified: int("isVerified").default(0),
+    isBlocked: int("isBlocked").default(0),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedAt: timestamp("updatedAt").onUpdateNow(),
   },
