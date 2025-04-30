@@ -5,22 +5,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Primary
-        blueOcean: "#3669C9",
-        orangeFresh: "#FDA429",
-        navyBlack: "#13181F",
-        white: "#FFFFFF",
-        // Secondary
-        earthGreen: "#3A9D7A",
-        redVelvet: "#C93545",
-        darkGrey: "#FAFAFA",
-        halfGrey: "#838589",
-        softGrey: "#EDEDED",
-        offGrey: "#F8F8F8",
-        // Label
-        offBlue: "#EFF5FB",
-        offGreen: "#EEFAF6",
-        offRed: "#FCECEF",
+        blue900: "#021024",
+        blue700: "#052659",
+        blue500: "#5483B3",
+        blue300: "#7DA0CA",
+        blue100: "#C1E8FF",
       },
     },
   },

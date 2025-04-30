@@ -6,6 +6,7 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { BlurView } from "expo-blur";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -13,15 +14,34 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.blueOcean,
+        tabBarActiveTintColor: Colors.blue500,
+        tabBarInactiveTintColor: "#000",
         headerShown: false,
-        tabBarBackground: TabBarBackground,
+        tabBarBackground: () => (
+          <BlurView
+            intensity={50}
+            tint="light"
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+              overflow: "hidden",
+            }}
+          />
+        ),
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
             position: "absolute",
+            borderTopWidth: 0, // hide border if using blur
+            backgroundColor: "transparent", // important for blur to show through
+            elevation: 0,
           },
-          default: {},
+          android: {
+            backgroundColor: "white",
+          },
         }),
       }}
     >
