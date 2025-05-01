@@ -1,9 +1,10 @@
 import { View, Text, TextInput, Image, Pressable } from "react-native";
 import { useRouter } from "expo-router";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function LoginScreen() {
   const router = useRouter();

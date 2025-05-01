@@ -4,17 +4,15 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Image,
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function EmailScreen() {
   const [email, setEmail] = useState("");
