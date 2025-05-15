@@ -7,16 +7,17 @@ import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { BlurView } from "expo-blur";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { AntDesign, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import Svg, { Path } from "react-native-svg";
+import { useAuth } from "@/context/AuthProvider";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  const { isLogged } = useAuth();
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.blue500,
+        tabBarActiveTintColor: Colors.light.blue500,
         tabBarInactiveTintColor: "#000",
         headerShown: false,
         tabBarBackground: () => (
@@ -82,10 +83,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="user"
         options={{
-          title: "User",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={28} name="user" color={color} />
-          ),
+          title: isLogged ? "Account" : "Login",
+          tabBarIcon: ({ color }) =>
+            isLogged ? (
+              <FontAwesome5 name="user" size={28} color={color} />
+            ) : (
+              <AntDesign size={28} name="login" color={color} />
+            ),
         }}
       />
     </Tabs>

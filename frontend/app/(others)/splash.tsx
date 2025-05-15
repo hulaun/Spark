@@ -10,7 +10,7 @@ const Splash = () => {
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace("/(auth)/login");
+      router.replace("/(tabs)");
     }, 700);
 
     return () => clearTimeout(timer);
@@ -20,7 +20,7 @@ const Splash = () => {
     <SafeAreaProvider>
       <SafeAreaView className="flex-1" style={{ backgroundColor: "#000" }}>
         <LinearGradient
-          colors={[Colors.blue900, Colors.blue700]}
+          colors={[Colors.light.blue900, Colors.light.blue700]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           className="flex-1"

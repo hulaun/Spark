@@ -20,7 +20,7 @@ export default function RegisterScreen() {
     <SafeAreaView className="flex-1">
       <ScrollView className="flex-1" contentContainerStyle={{ flexGrow: 1 }}>
         <LinearGradient
-          colors={[Colors.blue900, Colors.blue700]}
+          colors={[Colors.light.blue900, Colors.light.blue700]}
           className="flex-1 relative"
         >
           <View className="flex-1 justify-between align-center pt-5">
@@ -34,7 +34,7 @@ export default function RegisterScreen() {
             {/* Booking Toggle */}
             <View className="justify-center items-center pb-6">
               <LinearGradient
-                colors={[Colors.blue700, Colors.blue300]}
+                colors={[Colors.light.blue700, Colors.light.blue300]}
                 className="flex-row justify-between items-center pl-4 w-72"
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
@@ -50,7 +50,7 @@ export default function RegisterScreen() {
             </View>
             {/* Card */}
             <LinearGradient
-              colors={[Colors.blue900, Colors.blue700]}
+              colors={[Colors.light.blue900, Colors.light.blue700]}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
             >
@@ -101,7 +101,7 @@ export default function RegisterScreen() {
                 ))}
                 <View className="justify-center items-center">
                   <LinearGradient
-                    colors={[Colors.blue700, Colors.blue300]}
+                    colors={[Colors.light.blue700, Colors.light.blue300]}
                     className="w-2/3 border border-blue-300 rounded-lg"
                     style={{
                       borderRadius: 10,

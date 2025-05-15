@@ -117,6 +117,42 @@ const register = async (req, res) => {
   }
 };
 
+const getToken = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    console.log(decoded);
+    const { userId } = decoded;
+
+    const userResult = await db
+      .select()
+      .from(Users)
+      .where(eq(Users.id, userId))
+      .limit(1);
+    const user = userResult[0];
+
+    const newToken = jwt.sign({ userId: userId }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.status(200).send({
+      message: "Token generated successfully",
+      newToken,
+      user: {
+        id: user.id,
+        username: user.email || user.phoneNumber,
+        fullName: user.fullName,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+      },
+    });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
 const forgotPassword = async (req, res) => {
   try {
     const { identifier } = req.body;
@@ -215,4 +251,5 @@ export const AuthController = {
   forgotPassword,
   verifyOTP,
   resetPassword,
+  getToken,
 };

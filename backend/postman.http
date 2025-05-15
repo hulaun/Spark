@@ -4,13 +4,21 @@
 GET http://localhost:5000 HTTP/1.1
 
 
+
 ###
 POST http://localhost:5000/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
     "identifier": "admin@a.a",
-    "password": "admin"
+}
+
+###
+POST http://localhost:5000/auth/getToken HTTP/1.1
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0NzE5MDg3NCwiZXhwIjoxNzQ3MTk0NDc0fQ.Kta0zjSn-S0l3J1-S2-u_2HBnU5eC1AJbvfluYaq2_4"
 }
 
 ###

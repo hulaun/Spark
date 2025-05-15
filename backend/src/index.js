@@ -7,7 +7,9 @@ import cors from "cors";
 import { createServer } from "http";
 const app = express();
 const server = createServer(app);
+import morgan from "morgan";
 const port = process.env.SERVER_PORT;
+const host = process.env.SERVER_HOST;
 import route from "./routes/index.js";
 
 app.use(
@@ -18,12 +20,7 @@ app.use(
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:8080",
-      "http://127.0.0.1:8080",
-      "https://localhost:5000",
-      "http://127.0.0.1:5000",
-    ],
+    origin: ["https://localhost:5000", "http://0.0.0.0:5000"],
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -39,9 +36,12 @@ app.use(
 
 app.use(express.json());
 
+app.use(morgan("dev"));
 route(app);
 
+console.log(host);
+
 // Start the server
-server.listen(port, () => {
+server.listen(port, host, () => {
   console.log(`Example app listening on port ${port}`);
 });

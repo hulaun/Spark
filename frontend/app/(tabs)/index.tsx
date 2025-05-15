@@ -13,6 +13,7 @@ import { SportIconType } from "@/types/SportIconType";
 import { SportItem } from "@/types/SportItem";
 import VenueCard from "@/components/ui/VenueCard";
 import MainHeader from "@/components/ui/MainHeader";
+import { useAuth } from "@/context/AuthProvider";
 
 const sportsIcons: Array<SportIconType> = [
   "football",

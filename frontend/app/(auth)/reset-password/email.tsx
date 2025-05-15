@@ -23,7 +23,7 @@ export default function EmailScreen() {
       <SafeAreaView className="flex-1 bg-transparent">
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <LinearGradient
-            colors={[Colors.blue900, Colors.blue700]}
+            colors={[Colors.light.blue900, Colors.light.blue700]}
             className="flex-1 relative"
           >
             <View className="flex-1 px-6 pt-4">
@@ -48,7 +48,7 @@ export default function EmailScreen() {
               </View>
               <View className="justify-center items-center">
                 <LinearGradient
-                  colors={[Colors.blue700, Colors.blue300]}
+                  colors={[Colors.light.blue700, Colors.light.blue300]}
                   className="w-full"
                   style={{
                     borderRadius: 10,
