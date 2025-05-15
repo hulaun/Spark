@@ -1,14 +1,11 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { REACT_APP_SERVER_ENDPOINT } from "@env";
+import axios from 'axios';
 
-const api = axios.create({
-  baseURL: REACT_APP_SERVER_ENDPOINT,
+export const api = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 });
-
 api.interceptors.request.use((req) => {
   console.log(`api ${req.method} ${req.url}`);
   return req;
@@ -18,7 +15,6 @@ api.interceptors.response.use((res) => {
   console.log(res.data);
   return res;
 });
-
 // Optional helper to set token
 export const setAuthToken = (token?:string) => {
   if (token) {
@@ -26,26 +22,4 @@ export const setAuthToken = (token?:string) => {
   } else {
     delete api.defaults.headers.common['Authorization'];
   }
-};
-
-type RequestParams = {
-  path: string;
-  data?: any;
-  options?: AxiosRequestConfig;
-  signal?: AbortSignal;
-};
-
-export const get = async ({ path, data, options = {}, signal }: RequestParams) => {
-  return await api.get(path, {
-    ...options,
-    params: data, 
-    signal,
-  });
-};
-
-export const post = async ({ path, data, options = {}, signal }: RequestParams) => {
-  return await api.post(path, data, {
-    ...options,
-    signal,
-  });
 };

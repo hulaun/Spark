@@ -1,9 +1,9 @@
-import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
+import { Image, View } from "react-native";
 
 const Splash = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const Splash = () => {
     }, 700);
 
     return () => clearTimeout(timer);
-  }, [router]);
+  }, []);
 
   return (
     <SafeAreaProvider>
@@ -39,5 +39,3 @@ const Splash = () => {
 };
 
 export default Splash;
-
-const styles = StyleSheet.create({});

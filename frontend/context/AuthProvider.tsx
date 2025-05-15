@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { post, setAuthToken } from "./api";
+import { api, setAuthToken } from "./api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosError } from "axios";
 import { REACT_APP_SERVER_ENDPOINT } from "@env";
@@ -17,6 +17,7 @@ const AuthContext = createContext<{
   setUser: (user: { email: string; role: string } | null) => void;
   handleLogout: () => Promise<void>;
   login: (email: string, password: string) => Promise<boolean | undefined>;
+  isCheckingLogin: boolean;
 }>({
   isLogged: false,
   setIsLogged: () => {},
@@ -24,6 +25,7 @@ const AuthContext = createContext<{
   setUser: () => {},
   handleLogout: async () => {},
   login: async () => false,
+  isCheckingLogin: true,
 });
 
 export const useAuth = () => {
@@ -39,39 +41,47 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<{ email: string; role: string } | null>(
     null
   );
-
+  const [isCheckingLogin, setIsCheckingLogin] = useState(true);
+  console.log("AuthProvider initialized");
   useEffect(() => {
+    api.defaults.baseURL = REACT_APP_SERVER_ENDPOINT;
     const checkLoginState = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
-        console.log("endpoint", REACT_APP_SERVER_ENDPOINT);
-        if (token) {
+        const lastLogin = await AsyncStorage.getItem("lastLogin");
+        console.log("token:", token);
+        console.log("lastLogin:", lastLogin);
+        const now = Date.now();
+        const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+        if (token && lastLogin && now - parseInt(lastLogin) < sevenDays) {
           setAuthToken(token);
-          const response = await post({
-            path: "/auth/getToken",
-            data: { token },
-          });
+          const response: any = await api.post("/auth/getToken", { token });
           const data = response.data;
+
           if (data && data.token) {
+            await AsyncStorage.setItem("lastLogin", now.toString());
             await AsyncStorage.setItem("token", data.token);
             setAuthToken(data.token);
             setIsLogged(true);
             setUser(data.user);
-          } else {
-            setAuthToken();
-            setIsLogged(false);
-            setUser(null);
+            return;
           }
-        } else {
-          setAuthToken();
-          setIsLogged(false);
-          setUser(null);
         }
+
+        // Token missing, expired or invalid
+        await AsyncStorage.removeItem("token");
+        await AsyncStorage.removeItem("lastLogin");
+        setAuthToken();
+        setIsLogged(false);
+        setUser(null);
       } catch (error) {
         console.error("Error checking login state:", error);
         setAuthToken();
         setIsLogged(false);
         setUser(null);
+      } finally {
+        setIsCheckingLogin(false);
       }
     };
 
@@ -80,13 +90,14 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await post({
-        path: "auth/login",
-        data: { identifier: email, password },
+      const response = await api.post("/auth/login", {
+        identifier: email,
+        password,
       });
       if (response.data?.token) {
         await AsyncStorage.setItem("token", response.data.token);
-        setAuthToken(response.data.token); // Set the token in the Authorization header
+        await AsyncStorage.setItem("lastLogin", Date.now().toString());
+        setAuthToken(response.data.token);
         setIsLogged(true);
         setUser(response.data.user);
         return true;
@@ -124,6 +135,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser,
         handleLogout,
         login,
+        isCheckingLogin,
       }}
     >
       {children}

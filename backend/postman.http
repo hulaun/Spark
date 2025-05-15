@@ -11,6 +11,7 @@ Content-Type: application/json
 
 {
     "identifier": "admin@a.a",
+    "password": "admin"
 }
 
 ###
