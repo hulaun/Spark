@@ -49,8 +49,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const token = await AsyncStorage.getItem("token");
         const lastLogin = await AsyncStorage.getItem("lastLogin");
-        console.log("token:", token);
-        console.log("lastLogin:", lastLogin);
         const now = Date.now();
         const sevenDays = 7 * 24 * 60 * 60 * 1000;
 

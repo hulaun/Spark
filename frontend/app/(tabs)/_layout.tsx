@@ -7,7 +7,13 @@ import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { BlurView } from "expo-blur";
-import { AntDesign, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  FontAwesome,
+  FontAwesome5,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import Svg, { Path } from "react-native-svg";
 import { useAuth } from "@/context/AuthProvider";
 
@@ -76,7 +82,7 @@ export default function TabLayout() {
         options={{
           title: "Favorites",
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 size={28} name="bookmark" color={color} />
+            <FontAwesome size={28} name="bookmark-o" color={color} />
           ),
         }}
       />
@@ -86,9 +92,9 @@ export default function TabLayout() {
           title: isLogged ? "Account" : "Login",
           tabBarIcon: ({ color }) =>
             isLogged ? (
-              <FontAwesome5 name="user" size={28} color={color} />
+              <AntDesign name="user" size={28} color={color} />
             ) : (
-              <AntDesign size={28} name="login" color={color} />
+              <MaterialIcons size={28} name="login" color={color} />
             ),
         }}
       />
