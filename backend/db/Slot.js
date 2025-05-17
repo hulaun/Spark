@@ -14,7 +14,7 @@ export const Slots = mysqlTable("Slot", {
 
   courtId: int("courtId")
     .notNull()
-    .references(() => Courts.id),
+    .references(() => Courts.id, { onDelete: "cascade" }),
 
   dayOfWeek: mysqlEnum("dayOfWeek", [
     "Sun",

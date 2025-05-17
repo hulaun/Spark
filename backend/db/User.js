@@ -15,7 +15,7 @@ export const Users = mysqlTable(
     password: varchar("password", { length: 255 }).notNull(),
     email: varchar("email", { length: 255 }),
     phoneNumber: varchar("phoneNumber", { length: 20 }),
-    role: varchar("role", { length: 20 }),
+    role: varchar("role", { length: 20 }).default("user"),
     img: varchar("img", { length: 255 }),
     facebookId: varchar("facebookId", { length: 255 }),
     googleId: varchar("googleId", { length: 255 }),

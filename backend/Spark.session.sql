@@ -1,0 +1,33 @@
+-- SELECT *
+-- from user;
+-- SELECT *
+-- from booking;
+-- SELECT *
+-- from court;
+-- SELECT *
+-- from rating;
+-- SELECT *
+-- from slot;
+-- SELECT *
+-- from sport;
+-- SELECT *
+-- from venue;
+-- SELECT *
+-- from payment_method;
+-- SELECT *
+-- from slot_booking;
+-- SELECT *
+-- from user_profile;
+-- SELECT *
+-- from user_sport;
+-- SELECT *
+-- from venue_payment_method;
+-- SELECT *
+-- from venue_sport;
+-- Truncate FROM user;
+-- Truncate FROM booking;
+-- Truncate FROM court;
+-- Truncate FROM rating;
+-- Truncate FROM slot;
+-- Truncate FROM sport;
+-- Truncate FROM venue;

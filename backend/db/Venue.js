@@ -3,7 +3,7 @@ import {
   varchar,
   double,
   text,
-  serial,
+  timestamp,
   int,
 } from "drizzle-orm/mysql-core";
 import { Ratings } from "./Rating.js";
@@ -18,5 +18,8 @@ export const Venues = mysqlTable("venue", {
   longitude: double("longitude"),
   description: text("description"),
   imageUrl: varchar("imageUrl", { length: 255 }),
-  managerId: int("managerId").references(() => Users.id),
+  managerId: int("managerId").references(() => Users.id, {
+    onDelete: "cascade",
+  }),
+  createdAt: timestamp("createdAt").defaultNow(),
 });

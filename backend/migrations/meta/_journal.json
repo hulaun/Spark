@@ -15,6 +15,20 @@
       "when": 1744770209343,
       "tag": "0001_tidy_longshot",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1747486184513,
+      "tag": "0002_tearful_pixie",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1747486562193,
+      "tag": "0003_fair_thunderbolt",
+      "breakpoints": true
     }
   ]
 }

@@ -9,12 +9,13 @@ import { api, setAuthToken } from "./api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, { AxiosError } from "axios";
 import { REACT_APP_SERVER_ENDPOINT } from "@env";
+import { UserType } from "@/types/UserType";
 
 const AuthContext = createContext<{
   isLogged: boolean;
   setIsLogged: (isLogged: boolean) => void;
-  user: { email: string; role: string } | null;
-  setUser: (user: { email: string; role: string } | null) => void;
+  user: UserType | null;
+  setUser: (user: UserType | null) => void;
   handleLogout: () => Promise<void>;
   login: (email: string, password: string) => Promise<boolean | undefined>;
   isCheckingLogin: boolean;
@@ -38,9 +39,7 @@ export const useAuth = () => {
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLogged, setIsLogged] = useState(false);
-  const [user, setUser] = useState<{ email: string; role: string } | null>(
-    null
-  );
+  const [user, setUser] = useState<UserType | null>(null);
   const [isCheckingLogin, setIsCheckingLogin] = useState(true);
   console.log("AuthProvider initialized");
   useEffect(() => {

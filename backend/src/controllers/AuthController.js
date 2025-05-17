@@ -55,6 +55,7 @@ const login = async (req, res) => {
         fullName: user.fullName,
         email: user.email,
         phoneNumber: user.phoneNumber,
+        role: user.role,
       },
       token,
     });
@@ -146,6 +147,7 @@ const getToken = async (req, res) => {
         fullName: user.fullName,
         email: user.email,
         phoneNumber: user.phoneNumber,
+        role: user.role,
       },
     });
   } catch (error) {
