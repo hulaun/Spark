@@ -77,6 +77,8 @@ ios/Pods/
 ios/Podfile.lock
 ios/Podfile
 
+.vscode/
+
 # Xcode
 ios/xcuserdata/
 ios/*.xcodeproj/
