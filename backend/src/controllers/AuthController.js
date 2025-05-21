@@ -17,21 +17,11 @@ const login = async (req, res) => {
     var user;
 
     if (EMAIL_REGEX.test(identifier)) {
-      const userResult = await db
-        .select()
-        .from(Users)
-        .where(eq(Users.email, identifier));
-
-      user = userResult[0];
+      user = await UserService.getUserByEmail(identifier);
     }
 
     if (PHONE_REGEX.test(identifier)) {
-      const userResult = await db
-        .select()
-        .from(Users)
-        .where(eq(Users.phoneNumber, identifier));
-
-      user = userResult[0];
+      user = await UserService.getUserByPhoneNumber(identifier);
     }
 
     if (!user) {
@@ -73,11 +63,8 @@ const register = async (req, res) => {
     }
 
     if (EMAIL_REGEX.test(identifier)) {
-      const existingEmail = await db
-        .select()
-        .from(Users)
-        .where(eq(Users.email, identifier));
-      if (existingEmail.length > 0) {
+      const existingEmail = await UserService.getUserByEmail(identifier);
+      if (existingEmail !== null) {
         return res.status(400).send({ message: "Email already exists" });
       }
 
@@ -88,14 +75,11 @@ const register = async (req, res) => {
         password: hashedPassword,
         fullName,
       };
-      await db.insert(Users).values(newUser);
+      await UserService.createUser(newUser);
     }
     if (PHONE_REGEX.test(identifier)) {
-      const existingPhone = await db
-        .select()
-        .from(Users)
-        .where(eq(Users.phoneNumber, identifier));
-      if (existingPhone.length > 0) {
+      const existingPhone = await UserService.getUserByPhoneNumber(identifier);
+      if (existingPhone !== null) {
         return res.status(400).send({ message: "Phone number already exists" });
       }
 
@@ -127,12 +111,7 @@ const getToken = async (req, res) => {
     console.log(decoded);
     const { userId } = decoded;
 
-    const userResult = await db
-      .select()
-      .from(Users)
-      .where(eq(Users.id, userId))
-      .limit(1);
-    const user = userResult[0];
+    const user = await UserService.getUserById(userId);
 
     const newToken = jwt.sign({ userId: userId }, process.env.JWT_SECRET, {
       expiresIn: "7d",
@@ -164,23 +143,17 @@ const forgotPassword = async (req, res) => {
     }
 
     if (EMAIL_REGEX.test(identifier)) {
-      const userResult = await db
-        .select()
-        .from(Users)
-        .where(eq(Users.email, identifier));
+      const user = await UserService.getUserByEmail(identifier);
 
-      if (userResult.length === 0) {
+      if (user === null) {
         return res.status(404).send({ message: "User not found" });
       }
     }
 
     if (PHONE_REGEX.test(identifier)) {
-      const userResult = await db
-        .select()
-        .from(Users)
-        .where(eq(Users.phoneNumber, identifier));
+      const user = await UserService.getUserByPhoneNumber(identifier);
 
-      if (userResult.length === 0) {
+      if (user === null) {
         return res.status(404).send({ message: "User not found" });
       }
     }
