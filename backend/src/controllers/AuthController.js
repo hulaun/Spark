@@ -16,8 +16,11 @@ const login = async (req, res) => {
 
     var user;
 
+    console.log(identifier, password);
+    console.log(EMAIL_REGEX.test(identifier));
     if (EMAIL_REGEX.test(identifier)) {
       user = await UserService.getUserByEmail(identifier);
+      console.log("1" + user);
     }
 
     if (PHONE_REGEX.test(identifier)) {

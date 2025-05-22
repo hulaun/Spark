@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { UserProfile, Users } from "../../db/schema.js";
 import db from "../config/db/index.js";
 
@@ -46,7 +47,7 @@ const updateUser = async (id, data) => {
     .update(Users)
     .set(data)
     .where(eq(Users.id, id))
-    .returning()
+
     .execute();
   return updatedUser[0];
 };
@@ -56,7 +57,7 @@ const updateUserProfile = async (id, data) => {
     .update(UserProfile)
     .set(data)
     .where(eq(UserProfile.userId, id))
-    .returning()
+
     .execute();
   return updatedUserProfile[0];
 };
@@ -65,7 +66,7 @@ const deleteUser = async (id) => {
   const deletedUser = await db
     .delete(Users)
     .where(eq(Users.id, id))
-    .returning()
+
     .execute();
   return deletedUser[0];
 };

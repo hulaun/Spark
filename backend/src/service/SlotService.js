@@ -17,43 +17,48 @@ const getAllSlots = async () => {
   return slots;
 };
 
-const getSlotsByCourtId = async (courtId) => {
-  const slots = await db
+const createSlot = async (data) => {
+  const result = await db.insert(Slots).values(data).execute();
+  const insertedId = result.insertId;
+  const newSlot = await db
     .select()
     .from(Slots)
-    .where(eq(Slots.courtId, courtId))
+    .where(eq(Slots.id, insertedId))
+    .limit(1)
     .execute();
-  return slots;
-};
-
-const createSlot = async (data) => {
-  const newSlot = await db.insert(Slots).values(data).returning().execute();
   return newSlot[0];
 };
 
 const updateSlot = async (id, data) => {
+  await db.update(Slots).set(data).where(eq(Slots.id, id)).execute();
   const updatedSlot = await db
-    .update(Slots)
-    .set(data)
+    .select()
+    .from(Slots)
     .where(eq(Slots.id, id))
-    .returning()
+    .limit(1)
     .execute();
   return updatedSlot[0];
 };
 
 const deleteSlot = async (id) => {
-  const deletedSlot = await db
-    .delete(Slots)
+  const slotToDelete = await db
+    .select()
+    .from(Slots)
     .where(eq(Slots.id, id))
-    .returning()
+    .limit(1)
     .execute();
-  return deletedSlot[0];
+
+  if (!slotToDelete[0]) {
+    return null;
+  }
+
+  await db.delete(Slots).where(eq(Slots.id, id)).execute();
+  return slotToDelete[0];
 };
 
 export const SlotService = {
   getSlotById,
   getAllSlots,
-  getSlotsByCourtId,
   createSlot,
   updateSlot,
   deleteSlot,

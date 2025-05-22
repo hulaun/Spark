@@ -1,55 +1,46 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { VenueType } from "@/types/VenueType";
-import { SportItem } from "@/types/SportItem";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { VenueType } from '@/types/VenueType';
+import { SportItem } from '@/types/SportItem';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@/navigation/RootNavigator';
 
-const VenueCard = ({
-  venue,
-  sports,
-}: {
-  venue: VenueType;
-  sports: Array<SportItem>;
-}) => {
-  const router = useRouter();
+const VenueCard = ({ venue, sports }: { venue: VenueType; sports: Array<SportItem> }) => {
+  const router = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   return (
-    <View className="bg-white rounded-2xl shadow mb-4 overflow-hidden min-h-40">
+    <View className="mb-4 min-h-40 overflow-hidden rounded-2xl bg-white shadow">
       <Pressable
         onPress={() => {
-          router.push({
-            pathname: "/(others)/venue-detail",
+          router.navigate(
+            'VenueDetail'
             // params: { venueId: venue.id },
-          });
-        }}
-      >
+          );
+        }}>
         <View className="relative">
           <Image
-            source={require("@/assets/images/venue-card-bg.png")}
-            className="w-full h-40 rounded-2xl absolute"
-            resizeMode="cover"
-          ></Image>
+            source={require('@/assets/images/venue-card-bg.png')}
+            className="absolute h-40 w-full rounded-2xl"
+            resizeMode="cover"></Image>
           <View className="p-3">
             <View className="flex-row items-center justify-between">
-              <Text className="font-semibold text-base text-white">
-                {venue.name}
-              </Text>
+              <Text className="text-base font-semibold text-white">{venue.name}</Text>
               <Pressable
                 onPress={() => {
                   // Handle bookmark action here
-                  console.log("Bookmark pressed for:", venue.name);
-                }}
-              >
+                  console.log('Bookmark pressed for:', venue.name);
+                }}>
                 <Ionicons name="bookmark" size={16} color="#fff" />
               </Pressable>
             </View>
-            <Text className="text-xs text-gray-100 pt-12">{venue.address}</Text>
-            <View className="flex-row gap-2 mt-2 flex-wrap">
+            <Text className="pt-12 text-xs text-gray-100">{venue.address}</Text>
+            <View className="mt-2 flex-row flex-wrap gap-2">
               {sports.map((sport, index) => (
                 <View
                   key={index}
-                  className="flex flex-row justify-between bg-transperent rounded-full px-3 py-1 gap-2 border border-white"
-                >
+                  className="bg-transperent flex flex-row justify-between gap-2 rounded-full border border-white px-3 py-1">
                   <Ionicons name={sport.icon} size={16} color="#fff" />
                   <Text className="text-xs text-white">{sport.name}</Text>
                 </View>

@@ -1,0 +1,1 @@
+ALTER TABLE `sport` ADD `icon` varchar(255) NOT NULL;

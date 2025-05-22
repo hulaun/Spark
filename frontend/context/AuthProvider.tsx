@@ -1,15 +1,9 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { api, setAuthToken } from "./api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios, { AxiosError } from "axios";
-import { REACT_APP_SERVER_ENDPOINT } from "@env";
-import { UserType } from "@/types/UserType";
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { api, setAuthToken } from './api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios, { AxiosError } from 'axios';
+import { REACT_APP_SERVER_ENDPOINT } from '@env';
+import { UserType } from '@/types/UserType';
 
 const AuthContext = createContext<{
   isLogged: boolean;
@@ -32,7 +26,7 @@ const AuthContext = createContext<{
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
@@ -41,24 +35,25 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState<UserType | null>(null);
   const [isCheckingLogin, setIsCheckingLogin] = useState(true);
-  console.log("AuthProvider initialized");
+  console.log('AuthProvider initialized');
   useEffect(() => {
     api.defaults.baseURL = REACT_APP_SERVER_ENDPOINT;
+    console.log('API base URL set to:', api.defaults.baseURL);
     const checkLoginState = async () => {
       try {
-        const token = await AsyncStorage.getItem("token");
-        const lastLogin = await AsyncStorage.getItem("lastLogin");
+        const token = await AsyncStorage.getItem('token');
+        const lastLogin = await AsyncStorage.getItem('lastLogin');
         const now = Date.now();
         const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
         if (token && lastLogin && now - parseInt(lastLogin) < sevenDays) {
           setAuthToken(token);
-          const response: any = await api.post("/auth/getToken", { token });
+          const response: any = await api.post('/auth/getToken', { token });
           const data = response.data;
 
           if (data && data.token) {
-            await AsyncStorage.setItem("lastLogin", now.toString());
-            await AsyncStorage.setItem("token", data.token);
+            await AsyncStorage.setItem('lastLogin', now.toString());
+            await AsyncStorage.setItem('token', data.token);
             setAuthToken(data.token);
             setIsLogged(true);
             setUser(data.user);
@@ -67,13 +62,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
 
         // Token missing, expired or invalid
-        await AsyncStorage.removeItem("token");
-        await AsyncStorage.removeItem("lastLogin");
+        await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('lastLogin');
         setAuthToken();
         setIsLogged(false);
         setUser(null);
       } catch (error) {
-        console.error("Error checking login state:", error);
+        console.error('Error checking login state:', error);
         setAuthToken();
         setIsLogged(false);
         setUser(null);
@@ -87,13 +82,13 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await api.post("/auth/login", {
+      const response = await api.post('/auth/login', {
         identifier: email,
         password,
       });
       if (response.data?.token) {
-        await AsyncStorage.setItem("token", response.data.token);
-        await AsyncStorage.setItem("lastLogin", Date.now().toString());
+        await AsyncStorage.setItem('token', response.data.token);
+        await AsyncStorage.setItem('lastLogin', Date.now().toString());
         setAuthToken(response.data.token);
         setIsLogged(true);
         setUser(response.data.user);
@@ -104,20 +99,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 404) {
-          alert("User not found. Please check your email or phone number.");
+          alert('User not found. Please check your email or phone number.');
         } else if (error.response?.status === 401) {
-          alert("Invalid password. Please try again.");
+          alert('Invalid password. Please try again.');
         } else {
-          alert("An unexpected error occurred. Please try again later.");
+          alert('An unexpected error occurred. Please try again later.');
         }
       } else {
-        alert("An unexpected error occurred. Please try again later.");
+        alert('An unexpected error occurred. Please try again later.');
       }
     }
   };
 
   const handleLogout = async () => {
-    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem('token');
     setAuthToken(); // Remove the token from the Authorization header
     setIsLogged(false);
     setUser(null);
@@ -133,8 +128,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         handleLogout,
         login,
         isCheckingLogin,
-      }}
-    >
+      }}>
       {children}
     </AuthContext.Provider>
   );

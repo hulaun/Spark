@@ -1,0 +1,24 @@
+###
+GET http://localhost:5000/venue HTTP/1.1
+Content-Type: application/json
+
+###
+POST http://localhost:5000/venue HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Thong Nhat Stadium 2",
+    "address": "14 Tran Hung Dao",
+    "latitude": 16.06,
+    "longitude": 108.22,
+    "description": "Popular sports venue"
+}
+
+###
+PUT http://localhost:5000/venue/5 HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Tennis",
+    "icon": "tennisball-outline"
+}

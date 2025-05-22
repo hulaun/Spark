@@ -27,27 +27,42 @@ const getRatingsByUserId = async (userId) => {
 };
 
 const createRating = async (data) => {
-  const newRating = await db.insert(Ratings).values(data).returning().execute();
+  const result = await db.insert(Ratings).values(data).execute();
+  const insertedId = result.insertId;
+  const newRating = await db
+    .select()
+    .from(Ratings)
+    .where(eq(Ratings.id, insertedId))
+    .limit(1)
+    .execute();
   return newRating[0];
 };
 
 const updateRating = async (id, data) => {
+  await db.update(Ratings).set(data).where(eq(Ratings.id, id)).execute();
   const updatedRating = await db
-    .update(Ratings)
-    .set(data)
+    .select()
+    .from(Ratings)
     .where(eq(Ratings.id, id))
-    .returning()
+    .limit(1)
     .execute();
   return updatedRating[0];
 };
 
 const deleteRating = async (id) => {
-  const deletedRating = await db
-    .delete(Ratings)
+  const ratingToDelete = await db
+    .select()
+    .from(Ratings)
     .where(eq(Ratings.id, id))
-    .returning()
+    .limit(1)
     .execute();
-  return deletedRating[0];
+
+  if (!ratingToDelete[0]) {
+    return null;
+  }
+
+  await db.delete(Ratings).where(eq(Ratings.id, id)).execute();
+  return ratingToDelete[0];
 };
 
 export const RatingService = {

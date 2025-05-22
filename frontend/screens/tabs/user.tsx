@@ -1,32 +1,32 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import React, { useEffect } from "react";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
-import { useAuth } from "@/context/AuthProvider";
-import { AntDesign, FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import Svg, { Path } from "react-native-svg";
-import { StatusBar } from "expo-status-bar";
-import CustomButton from "@/components/ui/CustomButton";
-import { useIsFocused } from "@react-navigation/native";
+import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+import { useAuth } from '@/context/AuthProvider';
+import { AntDesign, FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import Svg, { Path } from 'react-native-svg';
+import { StatusBar } from 'expo-status-bar';
+import CustomButton from '@/components/ui/CustomButton';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@/navigation/RootNavigator';
 
 const User = () => {
-  const router = useRouter();
+  const router = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { isLogged, user } = useAuth();
   useEffect(() => {
     if (!isLogged) {
-      router.push("/(auth)/login");
+      router.navigate('Login');
     }
   }, []);
   const isFocused = useIsFocused();
   return (
     <SafeAreaProvider>
-      {isFocused && (
-        <StatusBar animated={true} backgroundColor="lightgrey" style="dark" />
-      )}
+      {isFocused && <StatusBar animated={true} backgroundColor="lightgrey" style="dark" />}
       <SafeAreaView>
         {/* Top Profile Card */}
-        <View className="bg-gray-300 rounded-b-3xl p-6 items-center shadow-md">
-          <View className="flex-row justify-end w-full gap-4">
+        <View className="items-center rounded-b-3xl bg-gray-300 p-6 shadow-md">
+          <View className="w-full flex-row justify-end gap-4">
             <TouchableOpacity>
               <AntDesign name="message1" size={24} color="black" />
             </TouchableOpacity>
@@ -36,13 +36,13 @@ const User = () => {
           </View>
 
           <Image
-            source={{ uri: "https://picsum.photos/200/300" }}
-            className="w-20 h-20 rounded-full my-4"
+            source={{ uri: 'https://picsum.photos/200/300' }}
+            className="my-4 h-20 w-20 rounded-full"
           />
 
           <Text className="text-lg font-semibold text-black">Van Lieu</Text>
 
-          <View className="flex-row mt-4 gap-8">
+          <View className="mt-4 flex-row gap-8">
             <View className="items-center">
               <Text className="text-base font-semibold text-black">8</Text>
               <Text className="text-sm text-gray-500">Post</Text>
@@ -59,7 +59,7 @@ const User = () => {
         </View>
 
         {/* Menu Buttons */}
-        <View className="px-4 mt-10 flex-row flex-wrap gap-4">
+        <View className="mt-10 flex-row flex-wrap gap-4 px-4">
           <CustomButton
             icon={
               <Svg width={20} height={20} viewBox="0 0 20 20" fill="none">
@@ -88,7 +88,7 @@ const User = () => {
             textColor="text-red-500"
             className="mb-6 w-[48%]"
           />
-          {isLogged && user!.role === "manager" ? (
+          {isLogged && user!.role === 'manager' ? (
             <CustomButton
               icon={
                 <Svg width="25" height="22" viewBox="0 0 25 22" fill="none">
@@ -99,15 +99,15 @@ const User = () => {
                 </Svg>
               }
               text="Pitch Manager"
-              className="bg-blue-900 mb-6 w-[48%]"
+              className="mb-6 w-[48%] bg-blue-900"
               textColor="text-black"
             />
           ) : null}
-          {isLogged && user!.role === "manager" ? (
+          {isLogged && user!.role === 'manager' ? (
             <CustomButton
               icon={<MaterialIcons name="bar-chart" size={20} color="black" />}
               text="Revenue"
-              className="bg-green-500 mb-6 w-[48%]"
+              className="mb-6 w-[48%] bg-green-500"
               textColor="text-black"
             />
           ) : null}

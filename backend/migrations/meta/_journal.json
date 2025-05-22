@@ -29,6 +29,13 @@
       "when": 1747486562193,
       "tag": "0003_fair_thunderbolt",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1747905846349,
+      "tag": "0004_eager_stardust",
+      "breakpoints": true
     }
   ]
 }
